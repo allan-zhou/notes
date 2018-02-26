@@ -1,10 +1,8 @@
-# Install and Config Zabbix
+# Zabbix Setup
 
 Zabbix is open-source monitoring software for networks and applications.It offers real-time monitoring of thousands of metrics collected from servers, virtual machines, and any other kind of network device.
 
 Zabbix 是一个企业级的分布式开源监控方案。
-
-> 支持docker吗？
 
 ## Prerequisites
 
@@ -128,7 +126,7 @@ sudo systemctl start zabbix-server
 sudo systemctl status zabbix-server
 ```
 
-![zabbix](../images/zabbix-01.png)
+![zabbix](./images/zabbix-01.png)
 
 - enable the server to start at boot time
 
@@ -146,15 +144,15 @@ http://your_zabbix_server_ip_address/zabbix/
 
 - config MySQL connection
 
-![zabbix](../images/zabbix-02.png)
+![zabbix](./images/zabbix-02.png)
 
 - finish
 
-![zabbix](../images/zabbix-03.png)
+![zabbix](./images/zabbix-03.png)
 
 ## installing and Configuring the Zabbix Agent
 
-log into the second server, which we'll call the “monitored server”.
+login to the second server, which we'll call the “monitored server”.
 
 - install Repository with MySQL database
 
@@ -172,26 +170,13 @@ apt-get update
 apt-get install zabbix-agent
 ```
 
-- generate a pre-shared keys (PSK)
-
-```bash
-sudo sh -c "openssl rand -hex 32 > /etc/zabbix/zabbix_agentd.psk"
-```
-
-- view psk
-
-```bash
-cat /etc/zabbix/zabbix_agentd.psk
-
-# output like as
-# 3e85184903823058956e8e5d4aba93785238b4927e2f276cec5fb2ae82fe2093
-```
-
 - config Zabbix server
 
 ```bash
 sudo vim /etc/zabbix/zabbix_agentd.conf
 ```
+
+修改Server配置项，配置为Zabbix Server的IP地址
 
 ```bash
 ##### Passive checks related
@@ -208,11 +193,19 @@ sudo vim /etc/zabbix/zabbix_agentd.conf
 Server=192.168.1.150
 ```
 
+修改Hostname配置项，此处的配置内容必须与Zabbix Server中新增Host时输入的Hostname保持一致
+
 ```bash
-TLSConnect=psk
-TLSAccept=psk
-TLSPSKIdentity=PSK 001
-TLSPSKFile=/etc/zabbix/zabbix_agentd.psk
+### Option: Hostname
+#       Unique, case sensitive hostname.
+#       Required for active checks and must match hostname as configured on the server.
+#       Value is acquired from HostnameItem if undefined.
+#
+# Mandatory: no
+# Default:
+# Hostname=
+
+Hostname=zserver1
 ```
 
 - start the Zabbix agent and set it to start at boot time
@@ -228,14 +221,20 @@ sudo systemctl enable zabbix-agent
 sudo systemctl status zabbix-agent
 ```
 
+- config firewall
+
 ```bash
 sudo ufw allow 10050/tcp
 ```
 
-## Error info
+## Adding the New Host to Zabbix Server
+
+- log in to the Zabbix Server web interface
+
+the default user is **Admin** and the password is **zabbix**
 
 ```bash
-Get value from agent failed: TCP successful, cannot establish TLS to [[192.168.1.20]:10050]: connection closed by peer
+http://your_zabbix_server_ip_address/zabbix/
 ```
 
 ## Reference
