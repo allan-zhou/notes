@@ -21,7 +21,7 @@ vim /etc/mysql/conf.d/mysqld.cnf
 
 添加如下配置,并保存
 
-```plain text
+```plaintext
 [mysqld]
 character_set_server=utf8
 ```
@@ -48,13 +48,13 @@ show variables like 'char%';
 mysql -u root -p
 ```
 
-创建用户:confluence
+创建用户: confluence
 
 ```sql
 CREATE USER 'confluence'@'localhost' IDENTIFIED BY 'Pass@1234';
 ```
 
-创建数据库:confluence
+创建数据库: confluence
 
 ```sql
 CREATE DATABASE confluence DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci；
@@ -72,15 +72,15 @@ flush privileges;
 
 - download packages
 
-```plain text
+```plaintext
 atlassian-confluence-6.3.1-x64.bin
-链接: https://pan.baidu.com/s/1bq5VuDx 密码: ypvr
+链接: [https://pan.baidu.com/s/1bq5VuDx](https://pan.baidu.com/s/1bq5VuDx) 密码: ypvr
 
 atlassian-extras-decoder-v2-3.2.jar
-链接: https://pan.baidu.com/s/1qZEsthq 密码: ueej
+链接: [https://pan.baidu.com/s/1qZEsthq](https://pan.baidu.com/s/1qZEsthq) 密码: ueej
 
 atlassian-universal-plugin-manager-plugin-2.22.jar
-链接: https://pan.baidu.com/s/1eTSjSTc 密码: i9d6
+链接: [https://pan.baidu.com/s/1eTSjSTc](https://pan.baidu.com/s/1eTSjSTc) 密码: i9d6
 ```
 
 - intalling
@@ -111,10 +111,10 @@ chmod +x atlassian-confluence-6.3.1-x64.bin
 http://server_ip:8090
 ```
 
-安装类型步骤，选择“产品安装”, “语言”选择“中文”，下一步
+安装类型步骤，选择“产品安装”, “语言”选择“中文”，下一步  
 ![confluence](./images/confluence-setup/confluence-setup-03.png)
 
-获得插件步骤，**不要勾选任何插件**，下一步
+获得插件步骤，**不要勾选任何插件**，下一步  
 ![confluence](./images/confluence-setup/confluence-setup-04.png)
 
 授权码步骤： 1. 先使用破解补丁替换原文件
@@ -133,14 +133,16 @@ cp atlassian-universal-plugin-manager-plugin-2.22.jar /opt/atlassian/confluence/
 /etc/init.d/confluence start
 ```
 
-授权码步骤： 2. 点击"获取试用授权"，（需要翻墙）使用自己的google账户登陆Atlassian
+授权码步骤： 2. 点击"获取试用授权"，（需要翻墙）使用自己的google账户登陆Atlassian  
 ![confluence](./images/confluence-setup/confluence-setup-05.png)
 
-选择License类型为“Confluence(Server)”,并生成license
+选择License类型为“Confluence(Server)”,并生成license  
 ![confluence](./images/confluence-setup/confluence-setup-06.png)
-弹出框中，点击“Yes”
+
+弹出框中，点击“Yes”  
 ![confluence](./images/confluence-setup/confluence-setup-07.png)
-授权码会自动填充到授权码文本框，下一步
+
+授权码会自动填充到授权码文本框，下一步  
 ![confluence](./images/confluence-setup/confluence-setup-08.png)
 
 选择数据库设置步骤： 1. 选择”MySQL“（先不要点击“外部数据库”）
@@ -157,23 +159,23 @@ cp mysql-connector-java-5.1.45-bin.jar /opt/atlassian/confluence/lib/
 /etc/init.d/confluence restart
 ```
 
-选择数据库设置步骤： 3.点击页面"外部数据库"，下一步
+选择数据库设置步骤： 3.点击页面"外部数据库"，下一步  
 ![confluence](./images/confluence-setup/confluence-setup-09.png)
 
-配置数据库步骤：选择"JDBC连接",进行设置，下一步
+配置数据库步骤：选择"JDBC连接",进行设置，下一步  
 ![confluence](./images/confluence-setup/confluence-setup-10.png)
 ![confluence](./images/confluence-setup/confluence-setup-11.png)
 
-加载内容步骤：选择“空白站点”，下一步
+加载内容步骤：选择“空白站点”，下一步  
 ![confluence](./images/confluence-setup/confluence-setup-12.png)
 
-配置用户管理步骤：选择“在confluence中管理用户和组”，下一步
+配置用户管理步骤：选择“在confluence中管理用户和组”，下一步  
 ![confluence](./images/confluence-setup/confluence-setup-13.png)
 
-配置系统管理员账户步骤：设置管理员名称和密码
+配置系统管理员账户步骤：设置管理员名称和密码  
 ![confluence](./images/confluence-setup/confluence-setup-14.png)
 
-Finish.
+Finish.  
 ![confluence](./images/confluence-setup/confluence-setup-15.png)
 
 ## Reference
