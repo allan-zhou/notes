@@ -2,8 +2,9 @@
 
 - [Confluence Setup](./docs/confluence-setup.md)
 - [Gitlab Setup](./docs/gitlab-setup.md)
-- [Install JDK](./docs/install-jdk.md)
 - [Install Docker-ce](./docs/install-docker-ce.md)
+- [Install JDK](./docs/install-jdk.md)
+- [Install OpenSSH](./docs/install-openssh.md)
 - [Jenkins Setup](./docs/jenkins-setup.md)
 - [LAMP Setup](./docs/LAMP-setup.md)
 - [LDAP](./docs/LDAP.md)
