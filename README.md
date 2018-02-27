@@ -6,6 +6,7 @@
 - [Install JDK](./docs/install-jdk.md)
 - [Install OpenSSH](./docs/install-openssh.md)
 - [Jenkins Setup](./docs/jenkins-setup.md)
+- [JIRA Setup](./docs/jira-setup.md)
 - [LAMP Setup](./docs/LAMP-setup.md)
 - [LDAP](./docs/LDAP.md)
 - [Mount Winshare in Ubuntu](./docs/mount-winshare.md)

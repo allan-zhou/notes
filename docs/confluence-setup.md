@@ -57,7 +57,7 @@ CREATE USER 'confluence'@'localhost' IDENTIFIED BY 'Pass@1234';
 创建数据库: confluence
 
 ```sql
-CREATE DATABASE confluence DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci；
+CREATE DATABASE confluence DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 ```
 
 用户授权，并应用授权
@@ -94,14 +94,20 @@ cd /opt/
 修改安装文件权限，并执行
 
 ```bash
-chmod +x atlassian-confluence-6.3.1-x64.bin
+chmod +x atlassian-jira-software-7.4.1-x64.bin
 
-./atlassian-confluence-6.3.1-x64.bin
+./atlassian-jira-software-7.4.1-x64.bin
 ```
 
 一路回车确定，使用默认配置(default setting)安装，如下图
 
 ![confluence](./images/confluence-setup/confluence-setup-02.png)
+
+从安装过程输出信息可知
+
+confluence的安装目录为：```/opt/atlassian/confluence```
+
+confluence的数据目录为：```/var/atlassian/application-data/confluence```
 
 - Config in the browser
 
