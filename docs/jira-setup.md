@@ -70,10 +70,10 @@ flush privileges;
 - download packages
 
 > **atlassian-jira-software-7.4.1-x64.bin**  
-> 链接: https://pan.baidu.com/s/1htFoB4o 密码: p533
+> 链接: <https://pan.baidu.com/s/1htFoB4o> 密码: p533
 >
 > **atlassian-extras-3.2.jar**  
-> 链接: https://pan.baidu.com/s/1kWPrSIN 密码: 3spu
+> 链接: <https://pan.baidu.com/s/1kWPrSIN> 密码: 3spu
 >
 > [mysql connector for java 5.1.45](https://dev.mysql.com/downloads/connector/j/)
 
@@ -88,9 +88,9 @@ cd /opt/
 修改安装文件权限，并执行
 
 ```bash
-chmod +x atlassian-confluence-6.3.1-x64.bin
+chmod +x atlassian-jira-software-7.4.1-x64.bin
 
-./atlassian-confluence-6.3.1-x64.bin
+./atlassian-jira-software-7.4.1-x64.bin
 ```
 
 一路回车确定，使用默认配置(default setting)安装，如下图
@@ -123,7 +123,7 @@ cp mysql-connector-java-5.1.45-bin.jar /opt/atlassian/jira/atlassian-jira/WEB-IN
 
 - Config in the browser
 
-使用浏览器访问confluence
+使用浏览器访问jira
 
 ```bash
 http://server_ip:8080
@@ -170,4 +170,4 @@ http://server_ip:8080
 ## Reference
 
 - [散尽浮华 cnblogs install jira](http://www.cnblogs.com/kevingrace/p/7608813.html)
-- https://www.cnblogs.com/ilanni/p/6200875.html
+- [demo jira](http://www.confluence.cn)

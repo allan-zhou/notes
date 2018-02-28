@@ -1,5 +1,6 @@
 # notes
 
+- [Benchmark Test](./docs/benchmarktest.md)
 - [Confluence Setup](./docs/confluence-setup.md)
 - [Gitlab Setup](./docs/gitlab-setup.md)
 - [Install Docker-ce](./docs/install-docker-ce.md)
