@@ -9,7 +9,7 @@ Jenkins helps to automate the non-human part of software development process, wi
 - [Java8](./install-jdk.md)
 - [Docker](./install-docker-ce.md)
 
-## Install Jenkins using docker
+## Install using docker
 
 - insall
 
