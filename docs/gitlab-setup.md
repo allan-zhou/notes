@@ -89,22 +89,7 @@ sudo rm -r /var/log/gitlab/
 docker pull gitlab/gitlab-ce
 ```
 
-- config data volumes
-
-```bash
-mkdir -p /data/gitlab
-
-cd /data/gitlab
-mkdir config data logs
-
-# config: 配置文件目录
-# data: 数据目录
-# logs: 日志目录
-```
-
 - docker run
-
-//--env GITLAB_SSH_PORT=2220 \
 
 ```bash
 docker run --detach \
@@ -118,10 +103,146 @@ docker run --detach \
     gitlab/gitlab-ce:latest
 ```
 
+配置说明
+
+```bash
+# 配置文件目录
+/data/gitlab/config
+# 日志目录
+/data/gitlab/logs
+# 数据目录
+/data/gitlab/data
+```
+
+## 配置HTTPS与SSH端口
+
+- 生成证书
+
+```bash
+mkdir /data/gitlab/config/ssl
+
+openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -subj "/C=CN/ST=Beijing/L=Chaoyang/O=yiqishanyuan/CN=yiqishanyuan.com" -keyout /data/gitlab/config/ssl/yiqishanyuan.com.key -out /data/gitlab/config/ssl/yiqishanyuan.com.crt
+```
+
+参数说明
+
+```bash
+# C=国家或地区 | ST=省、自治区或直辖市名 | L=位置名 | O=组织名称 | CN=公共名
+-subj "/C=CN/ST=Beijing/L=Chaoyang/O=yiqishanyuan/CN=yiqishanyuan.com"
+```
+
+- 修改配置文件
+
+停止gitlab服务，并打开配置文件
+
+```bash
+docker stop gitlab
+vim /data/gitlab/config/gitlab.rb
+```
+
+在文件底部添加以下内容
+
+```bash
+# HTTPS Settings
+# DOC: https://docs.gitlab.com/omnibus/settings/nginx.html
+# Setting external_url
+external_url "https://userver1:4430"
+
+# Setting the NGINX listen port
+nginx['listen_port'] = 443
+
+# Redirect HTTP requests to HTTPS
+nginx['redirect_http_to_https'] = true
+
+# ssl证书
+nginx['ssl_certificate'] = "/etc/gitlab/ssl/yiqishanyuan.com.crt"
+nginx['ssl_certificate_key'] = "/etc/gitlab/ssl/yiqishanyuan.com.key"
+
+# Change the default proxy header
+nginx['proxy_set_headers'] = {
+"X-Forwarded-Proto" => "https",
+"X-Forwarded-Ssl" => "on",
+}
+
+# ssh port
+gitlab_rails['gitlab_shell_ssh_port'] = 2220
+```
+
+重启gitlab服务
+
+```bash
+docker restart gitlab
+```
+
+## 配置LDAP
+
+> 假设LDAP server已经正常运行
+
+- 修改配置文件
+
+停止gitlab服务，并打开配置文件
+
+```bash
+docker stop gitlab
+vim /data/gitlab/config/gitlab.rb
+```
+
+在文件底部添加以下内容
+
+```bash
+# LDAP Settings
+# DOC: https://docs.gitlab.com/omnibus/settings/ldap.html
+gitlab_rails['ldap_enabled'] = true
+gitlab_rails['ldap_servers'] = YAML.load <<-EOS # remember to close this block with 'EOS' below
+main: # 'main' is the GitLab 'provider ID' of this LDAP server
+  label: 'LDAP'
+  host: 'ldap.example.org'
+  port: 389 # or 636
+  uid: 'cn'
+  method: 'plain' # "tls" or "ssl" or "plain"  
+  bind_dn: 'cn=admin,dc=yiqishanyuan,dc=com'
+  password: 'admin'
+  active_directory: false
+  allow_username_or_email_login: true  
+  lowercase_usernames: false
+  base: 'ou=people,dc=yiqishanyuan,dc=com'
+  user_filter: ''
+EOS
+```
+
+gitlab_rails['ldap_enabled'] = true
+gitlab_rails['ldap_servers'] = YAML.load <<-EOS # remember to close this block with 'EOS' below
+main: # 'main' is the GitLab 'provider ID' of this LDAP server
+label: 'LDAP'
+host: '172.16.199.13'
+port: 389
+uid: 'cn'
+method: 'plain' # "tls" or "ssl" or "plain"
+allow_username_or_email_login: true
+bind_dn: 'cn=admin,dc=arxanfintech,dc=com'
+password: 'admin'
+active_directory: false
+base: 'ou=people,dc=arxanfintech,dc=com'
+user_filter: ''
+EOS
+
+重启gitlab服务
+
+```bash
+docker restart gitlab
+```
+
+- 登陆gitlab配置
+
+进入管理界面
+
+在“设置”菜单选项中，禁用注册用户
+
 ## Reference
 
 - [administration doc](https://docs.gitlab.com/ce/administration/index.html)
 - [omnibus doc](https://docs.gitlab.com/omnibus/README.html)
 - [default setting templete](https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/files/gitlab-config-template/gitlab.rb.template)
 - [docker-ce available packages](https://packages.gitlab.com/gitlab/gitlab-ce)
-- [docker-ce docker images](https://docs.gitlab.com/omnibus/docker/)
+- [docker-ce docker guide](https://docs.gitlab.com/omnibus/docker/)
+- [专有名称 (DN) 属性说明](https://www.ibm.com/support/knowledgecenter/zh/SSCGGQ_1.2.0/com.ibm.ism.doc/Reference/_Topics/sy10570_.html)

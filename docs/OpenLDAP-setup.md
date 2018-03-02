@@ -104,8 +104,6 @@ mkdir data config
 
 - run openldap
 
---env LDAP_REPLICATION=true \
-
 ```bash
 docker run --detach \
   --hostname ldap.example.org \
@@ -114,46 +112,37 @@ docker run --detach \
   -p 636:636 \
   -v /data/ldap/data:/var/lib/ldap \
   -v /data/ldap/config:/etc/ldap/slapd.d \
-  --env LDAP_ORGANISATION="zhongyishanyuan"  \
+  --env LDAP_ORGANISATION="zhongyishanyuan" \
   --env LDAP_DOMAIN="yiqishanyuan.com" \
   --env LDAP_ADMIN_PASSWORD="admin" \
   --env LDAP_BASE_DN="yiqishanyuan.com" \
+  --restart always \
   osixia/openldap:latest
+```
+
+- 查看admin信息
+
+```bash
+docker exec ldap-service ldapsearch -x -H ldap://localhost -b dc=yiqishanyuan,dc=com -D 'cn=admin,dc=yiqishanyuan,dc=com' -w admin
 ```
 
 - run phpldapadmin
 
 ```bash
 docker run --detach \
-  --hostname phpldapadmin.example.org \
+  --hostname phpldapadmin-service \
   --name phpldapadmin-service \
   --link ldap-service:ldap-host \
-  --env PHPLDAPADMIN_LDAP_HOSTS="#PYTHON2BASH:[{'ldap.example.org': [{'server': [{'port': 389}, {'base': \"array('dc=yiqishanyuan,dc=com')\"}]},
-{'login': [{'bind_id': 'cn=admin,dc=yiqishanyuan,dc=com'}]}]}]" \
+  --env PHPLDAPADMIN_LDAP_HOSTS="#PYTHON2BASH:[{'ldap.example.org': [{'server': [{'tls': True}]}, {'login': [{'bind_id': 'cn=admin,dc=yiqishanyuan,dc=com'}]}]}]" \
   -p 4431:443 \
   -p 8001:80 \
   osixia/phpldapadmin:latest
 ```
+
+- browser
 
 ```bash
-docker run --detach \
-  --hostname phpldapadmin.example.org \
-  --name phpldapadmin-service \
-  --link ldap-service:ldap-host \
-  --env PHPLDAPADMIN_LDAP_HOSTS="#PYTHON2BASH:[{'ldap.example.org': [{'server': [{'tls': True}]},{'login': [{'bind_id': 'cn=admin,dc=yiqishanyuan,dc=com'}]}]}]" \
-  -p 4431:443 \
-  -p 8001:80 \
-  osixia/phpldapadmin:latest
-```
-
-```shell
---env PHPLDAPADMIN_LDAP_HOSTS="#PYTHON2BASH:[{'ldap.example.org': [{'server': [{'tls': True}]},{'login': [{'bind_id': 'cn=${ADMIN_PASSWORD},${CNNAME},dc=${DC}'}]}]},]" \
-```
-
-```shell
-docker run --name ldap-service --hostname ldap-service --detach osixia/openldap:latest
-docker run --name phpldapadmin-service --hostname phpldapadmin-service --link ldap-service:ldap-host --env PHPLDAPADMIN_LDAP_HOSTS=ldap-host --detach osixia/phpldapadmin:latest
-
+https://serverIP:4431/
 ```
 
 ## Glossary
@@ -174,3 +163,5 @@ You can connect it to the global LDAP directory service, or run a service all by
 - [install openldap in ubuntu(2)](https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-a-basic-ldap-server-on-an-ubuntu-12-04-vps)
 
 - [docker openldap](https://github.com/osixia/docker-openldap)
+
+- [openldap tutorial](https://sites.google.com/site/openldaptutorial/Home)
