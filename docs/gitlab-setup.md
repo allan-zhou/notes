@@ -23,7 +23,7 @@ sudo dpkg -i gitlab-ce_10.2.8-ce.0_amd64.deb
 
 dpkg -i会需要一段时间，安装完成提示如下
 
-![gitlab-setup](./images/gitlab-setup01.png)
+![gitlab-setup](./images/gitlab-setup/gitlab-setup-01.png)
 
 使用默认配置启动gitlab server
 
@@ -133,10 +133,7 @@ openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -subj "/C=CN/ST=Beijing
 
 - 修改配置文件
 
-停止gitlab服务，并打开配置文件
-
 ```bash
-docker stop gitlab
 vim /data/gitlab/config/gitlab.rb
 ```
 
@@ -168,7 +165,7 @@ nginx['proxy_set_headers'] = {
 gitlab_rails['gitlab_shell_ssh_port'] = 2220
 ```
 
-重启gitlab服务
+- 重启gitlab服务
 
 ```bash
 docker restart gitlab
@@ -180,10 +177,7 @@ docker restart gitlab
 
 - 修改配置文件
 
-停止gitlab服务，并打开配置文件
-
 ```bash
-docker stop gitlab
 vim /data/gitlab/config/gitlab.rb
 ```
 
@@ -197,46 +191,93 @@ gitlab_rails['ldap_servers'] = YAML.load <<-EOS # remember to close this block w
 main: # 'main' is the GitLab 'provider ID' of this LDAP server
   label: 'LDAP'
   host: 'ldap.example.org'
+  encryption: 'plain'
   port: 389 # or 636
-  uid: 'cn'
+  uid: 'sn'
   method: 'plain' # "tls" or "ssl" or "plain"  
   bind_dn: 'cn=admin,dc=yiqishanyuan,dc=com'
   password: 'admin'
   active_directory: false
   allow_username_or_email_login: true  
   lowercase_usernames: false
-  base: 'ou=people,dc=yiqishanyuan,dc=com'
+  base: 'ou=users,dc=yiqishanyuan,dc=com'
   user_filter: ''
 EOS
 ```
 
-gitlab_rails['ldap_enabled'] = true
-gitlab_rails['ldap_servers'] = YAML.load <<-EOS # remember to close this block with 'EOS' below
-main: # 'main' is the GitLab 'provider ID' of this LDAP server
-label: 'LDAP'
-host: '172.16.199.13'
-port: 389
-uid: 'cn'
-method: 'plain' # "tls" or "ssl" or "plain"
-allow_username_or_email_login: true
-bind_dn: 'cn=admin,dc=arxanfintech,dc=com'
-password: 'admin'
-active_directory: false
-base: 'ou=people,dc=arxanfintech,dc=com'
-user_filter: ''
-EOS
+- 配置gitlab服务的hosts
 
-重启gitlab服务
+> 如果```gitlab_rails['ldap_servers']```的host配置项使用域名配置，则需要配置gitlab服务的hosts
+
+```bash
+docker exec gitlab bash -c "echo $(docker inspect -f "{{ .NetworkSettings.IPAddress }}" ldap-service) ldap.example.org >> /etc/hosts"
+```
+
+- 重启gitlab服务
 
 ```bash
 docker restart gitlab
 ```
 
-- 登陆gitlab配置
+- 检查配置
 
-进入管理界面
+重新登陆gitlab时，发现多了一个“LDAP”的tab页  
+![gitlab-setup](./images/gitlab-setup/gitlab-setup-02.png)
 
-在“设置”菜单选项中，禁用注册用户
+登陆后进入系统管理，发现“LDAP”的Feature已经开启  
+![gitlab-setup](./images/gitlab-setup/gitlab-setup-03.png)
+
+## 配置LDAP登陆gitlab
+
+- 登陆LDAP server
+
+```bash
+https:serverID:port
+```
+
+![gitlab-setup](./images/gitlab-setup/gitlab-setup-04.png)
+
+- 创建 Organisational Unit
+
+我们创建两个ou，ou=groups和ou=users
+
+![gitlab-setup](./images/gitlab-setup/gitlab-setup-05.png)  
+![gitlab-setup](./images/gitlab-setup/gitlab-setup-06.png)  
+![gitlab-setup](./images/gitlab-setup/gitlab-setup-07.png)  
+
+最终结果  
+![gitlab-setup](./images/gitlab-setup/gitlab-setup-08.png)  
+
+- 创建 Posix Groups for users
+
+![gitlab-setup](./images/gitlab-setup/gitlab-setup-09.png)  
+![gitlab-setup](./images/gitlab-setup/gitlab-setup-10.png)  
+
+我们创建两个Posix Groups(admin和user)  
+![gitlab-setup](./images/gitlab-setup/gitlab-setup-14b.png)  
+
+- 创建用户
+
+选择ou=users --> "create a child entry"  
+![gitlab-setup](./images/gitlab-setup/gitlab-setup-11.png)  
+![gitlab-setup](./images/gitlab-setup/gitlab-setup-12.png)  
+
+设置用户密码和group等信息项后，提交信息  
+![gitlab-setup](./images/gitlab-setup/gitlab-setup-13.png)  
+![gitlab-setup](./images/gitlab-setup/gitlab-setup-14.png)  
+
+- 登陆
+
+添加用户成功后，使用LDAP用户即可登陆gitlab  
+![gitlab-setup](./images/gitlab-setup/gitlab-setup-15.png)  
+
+## 禁用gitlab注册用户
+
+使用管理员账户登陆gitlab，进入管理界面  
+![gitlab-setup](./images/gitlab-setup/gitlab-setup-16.png)  
+
+在“settings”菜单选项中，禁用注册用户  
+![gitlab-setup](./images/gitlab-setup/gitlab-setup-17.png)  
 
 ## Reference
 
@@ -246,3 +287,5 @@ docker restart gitlab
 - [docker-ce available packages](https://packages.gitlab.com/gitlab/gitlab-ce)
 - [docker-ce docker guide](https://docs.gitlab.com/omnibus/docker/)
 - [专有名称 (DN) 属性说明](https://www.ibm.com/support/knowledgecenter/zh/SSCGGQ_1.2.0/com.ibm.ism.doc/Reference/_Topics/sy10570_.html)
+- [gitlab ldap guide](https://docs.gitlab.com/ce/administration/auth/ldap.html)
+- [install ldap in ubuntu (digtalocean)](https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-a-basic-ldap-server-on-an-ubuntu-12-04-vps)
