@@ -1,9 +1,9 @@
 # OpenLDAP
 
-- [Install using APT](#Install%20using%20APT)
-- [Install using docker](#Install%20using%20docker)
+- [Install using APT](#install-using-apt)
+- [Install using docker](#install-using-docker)
 
-## Environment
+## Prerequisites
 
 - ubuntu server 16.04
 
@@ -139,11 +139,44 @@ docker run --detach \
   osixia/phpldapadmin:latest
 ```
 
-- browser
+## 创建 Organizational Units, Groups, and Users
+
+- 登陆LDAP server
 
 ```bash
-https://serverIP:4431/
+https:serverID:port
 ```
+
+![openldap-setup](./images/openldap-setup/openldap-setup-04.png)
+
+- 创建 Organisational Unit
+
+我们创建两个ou，ou=groups和ou=users
+
+![openldap-setup](./images/openldap-setup/openldap-setup-05.png)  
+![openldap-setup](./images/openldap-setup/openldap-setup-06.png)  
+![openldap-setup](./images/openldap-setup/openldap-setup-07.png)  
+
+最终结果  
+![openldap-setup](./images/openldap-setup/openldap-setup-08.png)  
+
+- 创建 Posix Groups for users
+
+![openldap-setup](./images/openldap-setup/openldap-setup-09.png)  
+![openldap-setup](./images/openldap-setup/openldap-setup-10.png)  
+
+我们创建两个Posix Groups(admin和user)  
+![openldap-setup](./images/openldap-setup/openldap-setup-15.png)  
+
+- 创建用户
+
+选择ou=users --> "create a child entry"  
+![openldap-setup](./images/openldap-setup/openldap-setup-11.png)  
+![openldap-setup](./images/openldap-setup/openldap-setup-12.png)  
+
+设置用户密码和group等信息项后，提交信息  
+![openldap-setup](./images/openldap-setup/openldap-setup-13.png)  
+![openldap-setup](./images/openldap-setup/openldap-setup-14.png)  
 
 ## Glossary
 

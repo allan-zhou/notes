@@ -1,10 +1,10 @@
 # Gitlab Server Setup
 
-- [Install using downloaded packages](#Install%20using%20downloaded%20packages)
-- [Install using APT](#Install%20using%20APT)
-- [Install using docker](#Install%20using%20docker)
+- [Install using downloaded packages](#install-using-downloaded-packages)
+- [Install using APT](#install-using-apt)
+- [Install using docker](#install-using-docker)
 
-## Environment
+## Prerequisites
 
 - ubuntu server 16.04
 
@@ -226,50 +226,6 @@ docker restart gitlab
 
 登陆后进入系统管理，发现“LDAP”的Feature已经开启  
 ![gitlab-setup](./images/gitlab-setup/gitlab-setup-03.png)
-
-## 配置LDAP登陆gitlab
-
-- 登陆LDAP server
-
-```bash
-https:serverID:port
-```
-
-![gitlab-setup](./images/gitlab-setup/gitlab-setup-04.png)
-
-- 创建 Organisational Unit
-
-我们创建两个ou，ou=groups和ou=users
-
-![gitlab-setup](./images/gitlab-setup/gitlab-setup-05.png)  
-![gitlab-setup](./images/gitlab-setup/gitlab-setup-06.png)  
-![gitlab-setup](./images/gitlab-setup/gitlab-setup-07.png)  
-
-最终结果  
-![gitlab-setup](./images/gitlab-setup/gitlab-setup-08.png)  
-
-- 创建 Posix Groups for users
-
-![gitlab-setup](./images/gitlab-setup/gitlab-setup-09.png)  
-![gitlab-setup](./images/gitlab-setup/gitlab-setup-10.png)  
-
-我们创建两个Posix Groups(admin和user)  
-![gitlab-setup](./images/gitlab-setup/gitlab-setup-14b.png)  
-
-- 创建用户
-
-选择ou=users --> "create a child entry"  
-![gitlab-setup](./images/gitlab-setup/gitlab-setup-11.png)  
-![gitlab-setup](./images/gitlab-setup/gitlab-setup-12.png)  
-
-设置用户密码和group等信息项后，提交信息  
-![gitlab-setup](./images/gitlab-setup/gitlab-setup-13.png)  
-![gitlab-setup](./images/gitlab-setup/gitlab-setup-14.png)  
-
-- 登陆
-
-添加用户成功后，使用LDAP用户即可登陆gitlab  
-![gitlab-setup](./images/gitlab-setup/gitlab-setup-15.png)  
 
 ## 禁用gitlab注册用户
 

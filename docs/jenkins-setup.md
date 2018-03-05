@@ -4,8 +4,9 @@ Jenkins is an open source automation server written in Java.
 
 Jenkins helps to automate the non-human part of software development process, with **continuous integration** and facilitating technical aspects of **continuous delivery**.
 
-## Depends
+## Prerequisites
 
+- ubuntu server 16.04
 - [Java8](./install-jdk.md)
 - [Docker](./install-docker-ce.md)
 
@@ -25,8 +26,6 @@ docker run \
   jenkinsci/blueocean
 ```
 
-docker run -itd -p 8080:8080 -p 50000:50000 --name jenkins --privileged=true  -v /data/jenkins:/var/jenkins_home jenkins
-
 - unlocking jenkins
 
 浏览器打开jenkins
@@ -43,11 +42,11 @@ cat /data/jenkins/secrets/initialAdminPassword
 
 ![jenkins-setup](./images/jenkins-setup/jenkins-setup-01.png)
 
-选择安装推荐的插件  
+选择安装推荐的插件,安装插件需要等待一会儿  
 ![jenkins-setup](./images/jenkins-setup/jenkins-setup-02.png)  
 ![jenkins-setup](./images/jenkins-setup/jenkins-setup-03.png)
 
-- 创建第一个admin用户
+- 创建第一个Admin用户
 
 ![jenkins-setup](./images/jenkins-setup/jenkins-setup-04.png)
 
@@ -61,7 +60,7 @@ cat /data/jenkins/secrets/initialAdminPassword
 
 ![jenkins-setup](./images/jenkins-setup/jenkins-setup-06.png)
 
-- "Security Realm" 选择 "LDAP",配置如下(根据个人情况修改相关参数)
+- "Security Realm" 选择 "LDAP"，配置如下(根据个人情况修改相关参数)
 
 ![jenkins-setup](./images/jenkins-setup/jenkins-setup-07.png)
 
@@ -73,6 +72,7 @@ cat /data/jenkins/secrets/initialAdminPassword
 - 授权配置
 
 ![jenkins-setup](./images/jenkins-setup/jenkins-setup-10.png)  
+添加的UserGroups必须是LDAP中已存在的group
 
 - 至此，LDAP已配置完成，可以使用LDAP中的用户登陆jenkins
 
@@ -177,7 +177,7 @@ Blue Ocean rethinks the user experience of Jenkins.
 
 [see more ..](https://jenkins.io/doc/book/blueocean/)
 
-## reference
+## Reference
 
 - [jenkins.io/doc](https://jenkins.io/doc/)
 - [Comparison of continuous integration software](https://en.wikipedia.org/wiki/Comparison_of_continuous_integration_software)
