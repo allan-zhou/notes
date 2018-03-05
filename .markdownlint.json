@@ -1,4 +1,4 @@
 {
     "MD009": { "br_spaces": 2 },
-    "MD013": { "line_length": 280}
+    "MD013": { "line_length": 512}
 }

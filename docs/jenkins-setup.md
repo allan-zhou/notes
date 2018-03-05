@@ -16,30 +16,67 @@ Jenkins helps to automate the non-human part of software development process, wi
 ```bash
 docker run \
   -u root \
-  --rm \
   -d \
-  -p 9000:8080 \
-  -v jenkins-data:/var/jenkins_home \
+  -p 8080:8080 \
+  -p 50000:50000 \
+  -v /data/jenkins:/var/jenkins_home \
   -v /var/run/docker.sock:/var/run/docker.sock \
   --name jenkins-blueocean \
   jenkinsci/blueocean
 ```
 
-- open a browser on `http://hostIP:9000`
+docker run -itd -p 8080:8080 -p 50000:50000 --name jenkins --privileged=true  -v /data/jenkins:/var/jenkins_home jenkins
 
 - unlocking jenkins
 
-get initialAdminPassword
+浏览器打开jenkins
 
 ```bash
-# enter the container
-docker exec -it jenkins-blueocean bash
-
-# cat the password
-cat /var/jenkins_home/secrets/initialAdminPassword
+http://serverIP:8080
 ```
 
-## Using Jenkins
+查看并输入initialAdminPassword
+
+```bash
+cat /data/jenkins/secrets/initialAdminPassword
+```
+
+![jenkins-setup](./images/jenkins-setup/jenkins-setup-01.png)
+
+选择安装推荐的插件  
+![jenkins-setup](./images/jenkins-setup/jenkins-setup-02.png)  
+![jenkins-setup](./images/jenkins-setup/jenkins-setup-03.png)
+
+- 创建第一个admin用户
+
+![jenkins-setup](./images/jenkins-setup/jenkins-setup-04.png)
+
+## 配置LDAP
+
+- 使用管理员账户登陆jenkins
+
+![jenkins-setup](./images/jenkins-setup/jenkins-setup-05.png)
+
+- "Manager Jenkis" --> "Configure Global Security"
+
+![jenkins-setup](./images/jenkins-setup/jenkins-setup-06.png)
+
+- "Security Realm" 选择 "LDAP",配置如下(根据个人情况修改相关参数)
+
+![jenkins-setup](./images/jenkins-setup/jenkins-setup-07.png)
+
+- 配置完成，点击"Test LDAP settins"进行测试
+
+![jenkins-setup](./images/jenkins-setup/jenkins-setup-08.png)  
+![jenkins-setup](./images/jenkins-setup/jenkins-setup-09.png)
+
+- 授权配置
+
+![jenkins-setup](./images/jenkins-setup/jenkins-setup-10.png)  
+
+- 至此，LDAP已配置完成，可以使用LDAP中的用户登陆jenkins
+
+![jenkins-setup](./images/jenkins-setup/jenkins-setup-11.png)
 
 ### Pipeline
 
@@ -68,3 +105,4 @@ Blue Ocean rethinks the user experience of Jenkins.
 - [jenkins.io/doc](https://jenkins.io/doc/)
 - [Comparison of continuous integration software](https://en.wikipedia.org/wiki/Comparison_of_continuous_integration_software)
 - [jenkins gitlab plugin](https://github.com/jenkinsci/gitlab-plugin)
+- [jenkins ldap plugin](https://plugins.jenkins.io/ldap)
