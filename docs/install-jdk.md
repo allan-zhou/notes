@@ -1,14 +1,14 @@
 # ubuntu下安装JDK
 
-1. 通过官网下载安装包安装(推荐)
-1. 通过ppa(源) 方式安装
+- [Install using downloaded packages(Recommend)](#install-using-downloaded-packages)
+- [Install using APT](#install-using-apt)
 
-## 安装包方式安装
+## Install using downloaded packages
 
-### 准备
+### Prerequisites
 
-- 操作系统 Ubuntu 16.4
-- jdk版本 [jdk-8u151-linux-x64.tar.gz](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+- Ubuntu Server 16.04
+- jdk版本 [官网下载地址](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 
 ### 创建安装目录
 
@@ -76,7 +76,7 @@ Java(TM) SE Runtime Environment (build 1.8.0_151-b12)
 Java HotSpot(TM) 64-Bit Server VM (build 25.151-b12, mixed mode)
 ```
 
-## ppa(源) 方式安装
+## Install using APT
 
 ### install
 

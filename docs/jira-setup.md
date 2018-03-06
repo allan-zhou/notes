@@ -5,10 +5,13 @@ jira是Atlassian公司出品的项目与事务跟踪工具，被广泛应用于�
 ## Prerequisites
 
 - Ubuntu Server 16.04
-- Java 1.8.0
-- MySQL 5.7.21
+- [Java 1.8.0](./install-jdk.md)
+- Docker
+- MySQL 5.7.21(based on Docker)
 
 ## MySQL config for jira
+
+- [install MySQL using docker](./install-mysql.md#install-using-docker)
 
 - 配置mysql字符集
 
@@ -20,13 +23,27 @@ vim /etc/mysql/conf.d/mysqld.cnf
 
 ```plaintext
 [mysqld]
-character_set_server=utf8
+init_connect='SET collation_connection = utf8_unicode_ci'
+init_connect='SET NAMES utf8'
+character-set-server=utf8
+collation-server=utf8_unicode_ci
+skip-character-set-client-handshake
+max_allowed_packet=50M
+innodb_log_file_size=256M
+
+[mysql]
+max_allowed_packet=32M
+default-character-set=utf8
+
+[client]
+max_allowed_packet=32M
+default-character-set=utf8
 ```
 
 重启mysql
 
 ```bash
-service mysql restart
+docker restart mysql
 ```
 
 查看mysql字符集
@@ -48,19 +65,19 @@ mysql -u root -p
 创建用户: jira
 
 ```sql
-CREATE USER 'jira'@'localhost' IDENTIFIED BY 'Pass@1234';
+CREATE USER 'jira'@'%' IDENTIFIED BY 'Pass@1234';
 ```
 
 创建数据库: jira
 
 ```sql
-CREATE DATABASE jira DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+CREATE DATABASE jira DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 ```
 
 用户授权，并应用授权
 
 ```sql
-grant all privileges on jira.* to jira@localhost;
+grant all privileges on jira.* to jira@'%';
 
 flush privileges;
 ```
@@ -166,6 +183,27 @@ http://server_ip:8080
 查看License，可以看到我们已成功破解JIAR。  
 ![jira](./images/jira-setup/jira-setup-15.png)  
 ![jira](./images/jira-setup/jira-setup-16.png)  
+
+## 配置LDAP
+
+- LDAP创建组织(ou)、组(group)、用户(users)
+
+- JIRA连接LDAP
+
+登陆JIAR，进入 "用户管理 > 用户目录",点击"添加目录"，目录选择"LDAP"类型，下一步
+![jira](./images/jira-setup/jira-setup-17.png)  
+![jira](./images/jira-setup/jira-setup-18.png)
+
+我的主要配置如下  
+![jira](./images/jira-setup/jira-setup-19.png)  
+![jira](./images/jira-setup/jira-setup-20.png)  
+![jira](./images/jira-setup/jira-setup-21.png)  
+
+点击"测试并保存"，进行测试
+![jira](./images/jira-setup/jira-setup-22.png)  
+
+进入"用户管理 > 用户"菜单，发现LDAP服务器上的用户已同步到jira
+![jira](./images/jira-setup/jira-setup-23.png)  
 
 ## Reference
 

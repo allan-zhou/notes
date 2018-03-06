@@ -18,11 +18,12 @@ Jenkins helps to automate the non-human part of software development process, wi
 docker run \
   -u root \
   -d \
-  -p 8080:8080 \
+  -p 8100:8080 \
   -p 50000:50000 \
   -v /data/jenkins:/var/jenkins_home \
   -v /var/run/docker.sock:/var/run/docker.sock \
   --name jenkins-blueocean \
+  --restart always \
   jenkinsci/blueocean
 ```
 

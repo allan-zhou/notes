@@ -7,34 +7,40 @@ Confluence is a team collaboration software, Written in Java.
 ## Prerequisites
 
 - Ubuntu Server 16.04
-- Java 1.8.0
-- MySQL 5.7.21
+- [Java 1.8.0](./install-jdk.md)
+- Docker
+- MySQL 5.7.21(based on Docker)
 
 ## MySQL config for confluence
+
+- [install MySQL using docker](./install-mysql.md#install-using-docker)
 
 - 配置mysql字符集
 
 ```bash
-vim /etc/mysql/conf.d/mysqld.cnf
+vim /data/mysql/config/my.cnf
 ```
 
-添加如下配置,并保存
+增加以下配置,并保存
 
 ```plaintext
 [mysqld]
 character_set_server=utf8
+
+[client]
+default-character-set=utf8
 ```
 
 重启mysql
 
 ```bash
-service mysql restart
+docker restart mysql
 ```
 
 查看mysql字符集
 
 ```bash
-show variables like 'char%';
+mysql> show variables like 'char%';
 ```
 
 ![confluence](./images/confluence-setup/confluence-setup-01.png)
@@ -50,19 +56,19 @@ mysql -u root -p
 创建用户: confluence
 
 ```sql
-CREATE USER 'confluence'@'localhost' IDENTIFIED BY 'Pass@1234';
+CREATE USER 'confluence'@'%' IDENTIFIED BY 'Pass@1234';
 ```
 
 创建数据库: confluence
 
 ```sql
-CREATE DATABASE confluence DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+CREATE DATABASE confluence DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 ```
 
 用户授权，并应用授权
 
 ```sql
-grant all privileges on confluence.* to confluence@localhost;
+grant all privileges on confluence.* to confluence@'%';
 
 flush privileges;
 ```
@@ -165,6 +171,8 @@ http://server_ip:8090
 ![confluence](./images/confluence-setup/confluence-setup-12.png)
 
 配置用户管理步骤：选择“在confluence中管理用户和组”，下一步  
+> 如果要与jira集成，选择"与JIRA连接"  
+
 ![confluence](./images/confluence-setup/confluence-setup-13.png)
 
 配置系统管理员账户步骤：设置管理员名称和密码  

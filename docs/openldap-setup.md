@@ -116,6 +116,7 @@ docker run --detach \
   --env LDAP_DOMAIN="yiqishanyuan.com" \
   --env LDAP_ADMIN_PASSWORD="admin" \
   --env LDAP_BASE_DN="yiqishanyuan.com" \
+  --env LDAP_REPLICATION=true \
   --restart always \
   osixia/openldap:latest
 ```
@@ -135,7 +136,7 @@ docker run --detach \
   --link ldap-service:ldap-host \
   --env PHPLDAPADMIN_LDAP_HOSTS="#PYTHON2BASH:[{'ldap.example.org': [{'server': [{'tls': True}]}, {'login': [{'bind_id': 'cn=admin,dc=yiqishanyuan,dc=com'}]}]}]" \
   -p 4431:443 \
-  -p 8001:80 \
+  -p 8500:80 \
   osixia/phpldapadmin:latest
 ```
 
@@ -147,36 +148,86 @@ docker run --detach \
 https:serverID:port
 ```
 
-![openldap-setup](./images/openldap-setup/openldap-setup-04.png)
+![openldap-setup](./images/openldap-setup/openldap-setup-01.png)
 
 - 创建 Organisational Unit
 
 我们创建两个ou，ou=groups和ou=users
 
-![openldap-setup](./images/openldap-setup/openldap-setup-05.png)  
-![openldap-setup](./images/openldap-setup/openldap-setup-06.png)  
-![openldap-setup](./images/openldap-setup/openldap-setup-07.png)  
+![openldap-setup](./images/openldap-setup/openldap-setup-02.png)  
+![openldap-setup](./images/openldap-setup/openldap-setup-03.png)  
+![openldap-setup](./images/openldap-setup/openldap-setup-04.png)  
 
 最终结果  
+![openldap-setup](./images/openldap-setup/openldap-setup-05.png)  
+
+- 创建组(group)
+
+选择上一级ou，点击"Create a child entry"
+![openldap-setup](./images/openldap-setup/openldap-setup-06.png)  
+![openldap-setup](./images/openldap-setup/openldap-setup-07.png)  
 ![openldap-setup](./images/openldap-setup/openldap-setup-08.png)  
-
-- 创建 Posix Groups for users
-
-![openldap-setup](./images/openldap-setup/openldap-setup-09.png)  
-![openldap-setup](./images/openldap-setup/openldap-setup-10.png)  
-
-我们创建两个Posix Groups(admin和user)  
-![openldap-setup](./images/openldap-setup/openldap-setup-15.png)  
 
 - 创建用户
 
-选择ou=users --> "create a child entry"  
+选择上一级ou，点击"Create a child entry"
+![openldap-setup](./images/openldap-setup/openldap-setup-09.png)  
+![openldap-setup](./images/openldap-setup/openldap-setup-10.png)  
 ![openldap-setup](./images/openldap-setup/openldap-setup-11.png)  
-![openldap-setup](./images/openldap-setup/openldap-setup-12.png)  
 
 设置用户密码和group等信息项后，提交信息  
-![openldap-setup](./images/openldap-setup/openldap-setup-13.png)  
-![openldap-setup](./images/openldap-setup/openldap-setup-14.png)  
+
+## Multi master replication
+
+- 启动ldap-service和ldap-service2
+
+基于前面demo增加配置LDAP_REPLICATION
+
+```bash
+# ldap-service
+docker run --detach \
+  --hostname ldap.example.org --name ldap-service \
+  -p 389:389 -p 636:636 \
+  -v /data/ldap/data:/var/lib/ldap \
+  -v /data/ldap/config:/etc/ldap/slapd.d \
+  --env LDAP_ORGANISATION="zhongyishanyuan" \
+  --env LDAP_DOMAIN="yiqishanyuan.com" \
+  --env LDAP_ADMIN_PASSWORD="admin" \
+  --env LDAP_BASE_DN="yiqishanyuan.com" \
+  --env LDAP_REPLICATION=true \
+  --restart always \
+  osixia/openldap:latest
+
+# ldap2-service
+docker run --detach \
+  --hostname ldap2.example.org --name ldap2-service \
+  -v /data/ldap2/data:/var/lib/ldap \
+  -v /data/ldap2/config:/etc/ldap/slapd.d \
+  --env LDAP_ORGANISATION="zhongyishanyuan" \
+  --env LDAP_DOMAIN="yiqishanyuan.com" \
+  --env LDAP_ADMIN_PASSWORD="admin" \
+  --env LDAP_BASE_DN="yiqishanyuan.com" \
+  --env LDAP_REPLICATION=true \
+  --restart always \
+  osixia/openldap:latest
+```
+
+- 配置/etc/hosts
+
+```bash
+#Add the pair "ip hostname" to /etc/hosts on each containers,
+#because ldap.example.org and ldap2.example.org are fake hostnames
+docker exec ldap-service bash -c "echo $(docker inspect -f "{{ .NetworkSettings.IPAddress }}" ldap2-service) ldap2.example.org >> /etc/hosts"
+docker exec ldap2-service bash -c "echo $(docker inspect -f "{{ .NetworkSettings.IPAddress }}" ldap-service) ldap.example.org >> /etc/hosts"
+```
+
+- check
+
+```bash
+docker exec ldap-service ldapsearch -x -H ldap://localhost -b dc=yiqishanyuan,dc=com -D 'cn=zhangsan,ou=users,dc=yiqishanyuan,dc=com' -w 123456
+
+docker exec ldap2-service ldapsearch -x -H ldap://localhost -b dc=yiqishanyuan,dc=com -D 'cn=admin,dc=yiqishanyuan,dc=com' -w admin
+```
 
 ## Glossary
 
