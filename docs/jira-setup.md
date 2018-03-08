@@ -190,7 +190,7 @@ http://server_ip:8080
 
 - JIRA连接LDAP
 
-登陆JIAR，进入 "用户管理 > 用户目录",点击"添加目录"，目录选择"LDAP"类型，下一步
+登陆JIAR，进入 "用户管理 > 用户目录",点击"添加目录"，目录选择"LDAP"类型，下一步  
 ![jira](./images/jira-setup/jira-setup-17.png)  
 ![jira](./images/jira-setup/jira-setup-18.png)
 
@@ -199,13 +199,39 @@ http://server_ip:8080
 ![jira](./images/jira-setup/jira-setup-20.png)  
 ![jira](./images/jira-setup/jira-setup-21.png)  
 
-点击"测试并保存"，进行测试
+点击"测试并保存"，进行测试  
 ![jira](./images/jira-setup/jira-setup-22.png)  
 
-进入"用户管理 > 用户"菜单，发现LDAP服务器上的用户已同步到jira
+进入"用户管理 > 用户"菜单，发现LDAP服务器上的用户已同步到jira  
 ![jira](./images/jira-setup/jira-setup-23.png)  
+
+## Uninstall JIRA
+
+- stop jira service
+
+```bash
+/etc/init.d/jira stop
+```
+
+- uninstalling
+
+```bash
+# 进入jira安装目录
+cd /opt/atlassian/jira
+
+# 执行卸载命令
+./uninstall
+```
+
+- remove application-data、logs etc.
+
+```bash
+rm -r /opt/atlassian/jira
+rm -r /var/atlassian/application-data/jira
+```
 
 ## Reference
 
 - [散尽浮华 cnblogs install jira](http://www.cnblogs.com/kevingrace/p/7608813.html)
 - [demo jira](http://www.confluence.cn)
+- [Uninstalling JIRA applications from Linux](https://confluence.atlassian.com/adminjiraserver071/uninstalling-jira-applications-from-linux-802592174.html)

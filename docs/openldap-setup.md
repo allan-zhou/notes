@@ -152,8 +152,7 @@ https:serverID:port
 
 - 创建 Organisational Unit
 
-我们创建两个ou，ou=groups和ou=users
-
+我们创建两个ou，ou=groups和ou=users  
 ![openldap-setup](./images/openldap-setup/openldap-setup-02.png)  
 ![openldap-setup](./images/openldap-setup/openldap-setup-03.png)  
 ![openldap-setup](./images/openldap-setup/openldap-setup-04.png)  
@@ -163,21 +162,20 @@ https:serverID:port
 
 - 创建组(group)
 
-选择上一级ou，点击"Create a child entry"
+选择上一级ou，点击"Create a child entry"  
 ![openldap-setup](./images/openldap-setup/openldap-setup-06.png)  
 ![openldap-setup](./images/openldap-setup/openldap-setup-07.png)  
 ![openldap-setup](./images/openldap-setup/openldap-setup-08.png)  
 
 - 创建用户
 
-选择上一级ou，点击"Create a child entry"
+选择上一级ou，点击"Create a child entry"  
 ![openldap-setup](./images/openldap-setup/openldap-setup-09.png)  
 ![openldap-setup](./images/openldap-setup/openldap-setup-10.png)  
-![openldap-setup](./images/openldap-setup/openldap-setup-11.png)  
 
 设置用户密码和group等信息项后，提交信息  
 
-## Multi master replication
+## Multi master replication（依据github官网文档测试，有bug）
 
 - 启动ldap-service和ldap-service2
 
@@ -224,9 +222,8 @@ docker exec ldap2-service bash -c "echo $(docker inspect -f "{{ .NetworkSettings
 - check
 
 ```bash
-docker exec ldap-service ldapsearch -x -H ldap://localhost -b dc=yiqishanyuan,dc=com -D 'cn=zhangsan,ou=users,dc=yiqishanyuan,dc=com' -w 123456
-
 docker exec ldap2-service ldapsearch -x -H ldap://localhost -b dc=yiqishanyuan,dc=com -D 'cn=admin,dc=yiqishanyuan,dc=com' -w admin
+docker exec ldap-service ldapsearch -x -H ldap://localhost -b dc=yiqishanyuan,dc=com -D 'cn=zhangsan,ou=users,dc=yiqishanyuan,dc=com' -w 123456
 ```
 
 ## Glossary

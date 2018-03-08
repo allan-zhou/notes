@@ -185,9 +185,35 @@ Finish.
 ![confluence](./images/confluence-setup/confluence-setup-16.png)  
 ![confluence](./images/confluence-setup/confluence-setup-17.png)  
 
+## Uninstall Confluence
+
+- stop confluence service
+
+```bash
+/etc/init.d/confluence stop
+```
+
+- uninstalling
+
+```bash
+# 进入confluence安装目录
+cd /opt/atlassian/confluence
+
+# 执行uninstall命令
+./uninstall
+```
+
+- remove application-data、logs etc.
+
+```bash
+rm -r /opt/atlassian/confluence
+rm -r /var/atlassian/application-data/confluence
+```
+
 ## Reference
 
 - [散尽浮华 cnblogs install confluence](https://www.cnblogs.com/kevingrace/p/7607442.html)
 - [demo confluence](http://www.confluence.cn)
 - [Comparison of wiki software](https://en.wikipedia.org/wiki/Comparison_of_wiki_software)
 - [wiki Confluence](https://en.wikipedia.org/wiki/Confluence_(software))
+- [Uninstalling Confluence from Linux](https://confluence.atlassian.com/doc/uninstalling-confluence-from-linux-255362396.html)
