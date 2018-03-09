@@ -93,7 +93,7 @@ docker pull gitlab/gitlab-ce
 
 ```bash
 docker run --detach \
-    --publish 4430:443 --publish 8600:80 --publish 2220:22 \
+    --publish 4432:443 --publish 8200:80 --publish 2222:22 \
     --name gitlab \
     --hostname gitlab.example.com \
     --restart always \
@@ -143,7 +143,7 @@ vim /data/gitlab/config/gitlab.rb
 # HTTPS Settings
 # DOC: https://docs.gitlab.com/omnibus/settings/nginx.html
 # Setting external_url
-external_url "https://userver1:4430"
+external_url "https://userver1:4432"
 
 # Setting the NGINX listen port
 nginx['listen_port'] = 443
@@ -151,7 +151,7 @@ nginx['listen_port'] = 443
 # Redirect HTTP requests to HTTPS
 nginx['redirect_http_to_https'] = true
 
-# ssl证书
+# ssl certificate
 nginx['ssl_certificate'] = "/etc/gitlab/ssl/yiqishanyuan.com.crt"
 nginx['ssl_certificate_key'] = "/etc/gitlab/ssl/yiqishanyuan.com.key"
 
@@ -162,7 +162,7 @@ nginx['proxy_set_headers'] = {
 }
 
 # ssh port
-gitlab_rails['gitlab_shell_ssh_port'] = 2220
+gitlab_rails['gitlab_shell_ssh_port'] = 2222
 ```
 
 - 重启gitlab服务
@@ -193,7 +193,7 @@ main: # 'main' is the GitLab 'provider ID' of this LDAP server
   host: 'ldap.example.org'
   encryption: 'plain'
   port: 389 # or 636
-  uid: 'sn'
+  uid: 'cn'
   method: 'plain' # "tls" or "ssl" or "plain"  
   bind_dn: 'cn=admin,dc=yiqishanyuan,dc=com'
   password: 'admin'
@@ -205,18 +205,18 @@ main: # 'main' is the GitLab 'provider ID' of this LDAP server
 EOS
 ```
 
+- 重启gitlab服务
+
+```bash
+docker restart gitlab
+```
+
 - 配置gitlab服务的hosts
 
 > 如果```gitlab_rails['ldap_servers']```的host配置项使用域名配置，则需要配置gitlab服务的hosts
 
 ```bash
 docker exec gitlab bash -c "echo $(docker inspect -f "{{ .NetworkSettings.IPAddress }}" ldap-service) ldap.example.org >> /etc/hosts"
-```
-
-- 重启gitlab服务
-
-```bash
-docker restart gitlab
 ```
 
 - 检查配置

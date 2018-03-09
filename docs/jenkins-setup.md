@@ -18,7 +18,7 @@ Jenkins helps to automate the non-human part of software development process, wi
 docker run \
   -u root \
   -d \
-  -p 8100:8080 \
+  -p 8300:8080 \
   -p 50000:50000 \
   -v /data/jenkins:/var/jenkins_home \
   -v /var/run/docker.sock:/var/run/docker.sock \
@@ -88,7 +88,7 @@ Jenkins 用户权限管理是Jenkins Administration中非常很重要的环节�
 - LDAP <https://plugins.jenkins.io/ldap>，这个插件允许使用LDAP对用户进行认证，LDAP 服务器可以为Active Directory 或者 OpenLDAP。
 - Active Directory <https://plugins.jenkins.io/active-directory>，这个插件允许使用Active Directory对用户进行认证，同时结合诸如Matrix Authorization Strategy插件，可以识别用户所在的所有用户组，对用户授权进行灵活配置。
 - 基于Windows Active Directory进行域管理的企业，推荐采用Active Directory。
-- GitHub Authentication <https://plugins.jenkins.io/github-oauth>，这个插件提供了使用GitHub进行用户认证和授权的方案。
+- GitHub Authentica tion <https://plugins.jenkins.io/github-oauth>，这个插件提供了使用GitHub进行用户认证和授权的方案。
 - Gitlab Authentication <https://plugins.jenkins.io/gitlab-oauth>，这个插件提供了使用GitLab进行用户认证和授权的方案。
 - Matrix Authorization Strategy <https://plugins.jenkins.io/matrix-auth>，这个插件提供了基于矩阵的授权策略，支持全局和项目级别的配置。
 - Role-based Authorization Strategy <https://plugins.jenkins.io/role-strategy>，这个插件提供了一种基于角色（Role）的用户权限管理策略，支持创建global角色、Project角色、Slave角色，以及给用户分配这些角色。这款插件是最常用的Jenkins权限策略和管理插件。
