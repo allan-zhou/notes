@@ -137,6 +137,7 @@ docker run --detach \
   --env PHPLDAPADMIN_LDAP_HOSTS="#PYTHON2BASH:[{'ldap.example.org': [{'server': [{'tls': True}]}, {'login': [{'bind_id': 'cn=admin,dc=yiqishanyuan,dc=com'}]}]}]" \
   -p 4431:443 \
   -p 8100:80 \
+  --restart always \
   osixia/phpldapadmin:latest
 ```
 
@@ -244,5 +245,7 @@ You can connect it to the global LDAP directory service, or run a service all by
 - [install openldap in ubuntu(2)](https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-a-basic-ldap-server-on-an-ubuntu-12-04-vps)
 
 - [docker openldap](https://github.com/osixia/docker-openldap)
+
+- [docker phpLDAPadmin](https://github.com/osixia/docker-phpLDAPadmin)
 
 - [openldap tutorial](https://sites.google.com/site/openldaptutorial/Home)
