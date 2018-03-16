@@ -7,8 +7,8 @@ Jenkins helps to automate the non-human part of software development process, wi
 ## Prerequisites
 
 - ubuntu server 16.04
-- [Java8](./install-jdk.md)
-- [Docker](./install-docker-ce.md)
+- [Java8](./jdk-setup.md)
+- [Docker](./docker-ce-setup.md)
 
 ## Install using docker
 

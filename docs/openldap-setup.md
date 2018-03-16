@@ -134,8 +134,8 @@ docker run --detach \
   --hostname phpldapadmin-service \
   --name phpldapadmin-service \
   --link ldap-service:ldap-host \
+  --env PHPLDAPADMIN_HTTPS=false \
   --env PHPLDAPADMIN_LDAP_HOSTS="#PYTHON2BASH:[{'ldap.example.org': [{'server': [{'tls': True}]}, {'login': [{'bind_id': 'cn=admin,dc=yiqishanyuan,dc=com'}]}]}]" \
-  -p 4431:443 \
   -p 8100:80 \
   --restart always \
   osixia/phpldapadmin:latest

@@ -7,13 +7,13 @@ Confluence is a team collaboration software, Written in Java.
 ## Prerequisites
 
 - Ubuntu Server 16.04
-- [Java 1.8.0](./install-jdk.md)
+- [Java 1.8.0](./jdk-setup.md)
 - Docker
 - MySQL 5.7.21(based on Docker)
 
 ## MySQL config for confluence
 
-- [install MySQL using docker](./install-mysql.md#install-using-docker)
+- [install MySQL using docker](./mysql-setup.md#install-using-docker)
 
 - 配置mysql字符集
 

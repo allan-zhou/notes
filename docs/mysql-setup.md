@@ -70,6 +70,11 @@ docker run --name mysql \
 
 - 配置字符集
 
+```bash
+# APT安装方式，配置路径
+vim /etc/mysql/conf.d/mysql.cnf
+```
+
 ```plaintext
 [mysqld]
 character_set_server=utf8

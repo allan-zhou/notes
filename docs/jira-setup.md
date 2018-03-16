@@ -5,13 +5,13 @@ jira是Atlassian公司出品的项目与事务跟踪工具，被广泛应用于�
 ## Prerequisites
 
 - Ubuntu Server 16.04
-- [Java 1.8.0](./install-jdk.md)
+- [Java 1.8.0](./jdk-setup.md)
 - Docker
 - MySQL 5.7.21(based on Docker)
 
 ## MySQL config for jira
 
-- [install MySQL using docker](./install-mysql.md#install-using-docker)
+- [install MySQL using docker](./mysql-setup.md#install-using-docker)
 
 - 配置mysql字符集
 
