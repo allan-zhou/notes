@@ -205,6 +205,7 @@ cd /opt/atlassian/confluence
 
 - remove application-data、logs etc.
 
+
 ```bash
 rm -r /opt/atlassian/confluence
 rm -r /var/atlassian/application-data/confluence

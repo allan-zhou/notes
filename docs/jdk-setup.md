@@ -39,7 +39,7 @@ sudo vim /etc/profile.d/jdk.sh
 添加以下内容并保存文件
 
 ```bash
-JAVA_HOME=/usr/local/java/jdk
+export JAVA_HOME=/usr/local/java/jdk
 
 export JRE_HOME=/usr/local/java/jdk/jre
 
