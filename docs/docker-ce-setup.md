@@ -84,6 +84,26 @@ sudo usermod -aG docker $USER
 
 - log out and log back in so that your group membership is re-evaluated
 
+## 修改国内镜像源
+
+```bash
+vim  /etc/docker/daemon.json
+```
+
+添加以下内容
+
+```vim
+{
+"registry-mirrors": ["https://registry.docker-cn.com"]
+}
+```
+
+重启docker
+
+```bash
+service docker restart
+```
+
 ## Reference
 
 - [ubuntu install docker-ce](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
