@@ -31,7 +31,7 @@ service nfs-kernel-server restart
 安装依赖
 
 ```bash
-apt install nfs-common
+apt install -y nfs-common
 ```
 
 - mount command

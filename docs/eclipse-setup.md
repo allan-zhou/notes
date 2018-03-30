@@ -2,12 +2,12 @@
 
 - download eclipse
 
-下载地址:<http://mirrors.ustc.edu.cn/eclipse/technology/epp/downloads/release/oxygen/2/eclipse-jee-oxygen-2-linux-gtk-x86_64.tar.gz>
+下载地址:<http://mirrors.ustc.edu.cn/eclipse/technology/epp/downloads/release/oxygen/3/eclipse-jee-oxygen-3-linux-gtk-x86_64.tar.gz>
 
 - 将eclipse解压到安装目录 ```/opt``` 文件夹下
 
 ```bash
-sudo tar -zxvf eclipse-jee-oxygen-2-linux-gtk-x86_64.tar.gz -C /opt/
+sudo tar -zxvf eclipse-jee-oxygen-3-linux-gtk-x86_64.tar.gz -C /opt/
 ```
 
 - 创建eclipse桌面快捷图标
