@@ -8,18 +8,12 @@
 
 下载地址：<http://maven.apache.org/download.html>
 
-### 创建安装目录
+## 解压 Maven 到安装目录
 
 ```bash
-sudo mkdir /usr/local/maven
-```
+sudo tar -zxvf apache-maven-3.5.3-bin.tar.gz -C /opt/
 
-## 解压 Maven 文件
-
-```bash
-sudo tar -zxvf apache-maven-3.5.3-bin.tar.gz -C /usr/local/
-
-cd /usr/local
+cd /opt/
 ```
 
 ### 更名解压包，便于配置环境变量
@@ -37,7 +31,7 @@ sudo vim /etc/profile.d/maven.sh
 添加 **MAVEN_HOME** 到环境变量中。
 
 ```bash
-export MAVEN_HOME=/usr/local/maven
+export MAVEN_HOME=/opt/apache-maven-3.5.3
 
 export PATH=$PATH:$MAVEN_HOME/bin
 ```

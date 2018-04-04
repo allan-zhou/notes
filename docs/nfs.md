@@ -56,3 +56,4 @@ mount -a
 
 - <https://help.ubuntu.com/lts/serverguide/network-file-system.html>
 - <https://help.ubuntu.com/community/NFSv4Howto>
+- <https://linux.die.net/man/5/exports>
