@@ -1,13 +1,17 @@
-docker默认镜像源被墙了，这样操作改用阿里镜像。
+# tmp
 
-1.新建文件：vim  /etc/docker/daemon.json
-2.内容：
+## member api
+
 {
- "registry-mirrors": ["https://uxk0ognt.mirror.aliyuncs.com"]
+    "memberId": 1,
+    "syId": 1234,
+    "memberName": "测试001",
+    "memberDispName": "测试001",
+    "memberTruename": "测试001",
+    "memberType": 1,
+    "memberIdType": 1,
+    "memberIdValue": "val1234",
+    "memberMobile": "15855556666",
+    "memberTime": "2018-04-09"
 }
-{ 
-"registry-mirrors": ["https://registry.docker-cn.com"] 
-}
-3.保存内容
-sudo  systemctl daemon-reload
-sudo systemctl restart docker
+
