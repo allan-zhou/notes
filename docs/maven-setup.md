@@ -16,7 +16,7 @@ sudo tar -zxvf apache-maven-3.5.3-bin.tar.gz -C /opt/
 cd /opt/
 ```
 
-### 更名解压包，便于配置环境变量
+### (*)更名解压包，便于配置环境变量
 
 ```bash
 sudo mv apache-maven-3.5.3 maven
@@ -31,6 +31,7 @@ sudo vim /etc/profile.d/maven.sh
 添加 **MAVEN_HOME** 到环境变量中。
 
 ```bash
+export M2_HOME=/opt/apache-maven-3.5.3
 export MAVEN_HOME=/opt/apache-maven-3.5.3
 
 export PATH=$PATH:$MAVEN_HOME/bin

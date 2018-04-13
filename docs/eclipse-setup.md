@@ -33,19 +33,13 @@ Type=Application
 Categories=Application;Development;
 ```
 
-- 将eclipse变为可执行文件
+将eclipse变为可执行文件
 
 ```bash
 chmod +x eclipse.desktop
 ```
 
-- 在eclipse的安装目录中创建一个指向JRE路径的软链接
-
-```bash
-sudo ln -sf $JRE_HOME /opt/eclipse/jre
-```
-
-- 添加到应用程序列表方便查询
+添加到应用程序列表方便查询
 
 ```bash
 sudo cp eclipse.desktop  /usr/share/applications/

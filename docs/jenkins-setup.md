@@ -22,7 +22,8 @@ docker run \
   -p 50000:50000 \
   -v /data/jenkins:/var/jenkins_home \
   -v /var/run/docker.sock:/var/run/docker.sock \
-  --name jenkins-blueocean \
+  -v /opt:/opt \
+  --name jenkins \
   --restart always \
   jenkinsci/blueocean
 ```

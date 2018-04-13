@@ -4,19 +4,14 @@
 
 下载地址：<https://mirrors.cnnic.cn/apache/tomcat/>
 
-- 创建安装目录
-
-```bash
-mkdir -p /usr/local/tomcat
-```
 
 - 解压安装包
 
 ```bash
-sudo tar -zxvf apache-tomcat-8.5.29.tar.gz -C /usr/local/
+sudo tar -zxvf apache-tomcat-8.5.29.tar.gz -C /opt/
 ```
 
-- 修改tomcat目录名称
+- (可选)修改tomcat目录名称
 
 ```bash
 mv apache-tomcat-8.5.29/ tomcat/
@@ -31,7 +26,7 @@ vim /etc/profile.d/tomcat.sh
 添加一下内容
 
 ```bash
-CATALINA_HOME=/usr/local/tomcat
+CATALINA_HOME=/opt/apache-tomcat-8.5.29
 
 export CATALINA_HOME
 ```
@@ -45,7 +40,7 @@ source /etc/profile.d/tomcat.sh
 - 启动tomcat
 
 ```bash
-cd /usr/local/tomcat
+cd /opt/tomcat
 
 bin/startup.sh
 ```
