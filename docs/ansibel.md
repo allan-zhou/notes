@@ -1,3 +1,0 @@
-# Ansibel QuickStart
-
-## Reference
