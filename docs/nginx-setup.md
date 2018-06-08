@@ -19,6 +19,8 @@ sudo systemctl restart nginx
 sudo systemctl reload nginx #重新加载配置
 ```
 
+/usr/share/nginx/html
+
 ## Server Directory
 
 ### Content

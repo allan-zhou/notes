@@ -4,7 +4,6 @@
 
 下载地址：<https://mirrors.cnnic.cn/apache/tomcat/>
 
-
 - 解压安装包
 
 ```bash
@@ -26,7 +25,7 @@ vim /etc/profile.d/tomcat.sh
 添加一下内容
 
 ```bash
-CATALINA_HOME=/opt/apache-tomcat-8.5.29
+CATALINA_HOME=/opt/tomcat
 
 export CATALINA_HOME
 ```

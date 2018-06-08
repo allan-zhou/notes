@@ -19,7 +19,7 @@ sudo mkdir /usr/local/java
 ### 解压安装包，并进入解压目录
 
 ```bash
-sudo tar -zxvf jdk-8u151-linux-x64.tar.gz -C /usr/local/java/
+sudo tar -zxvf jdk-8u161-linux-x64.tar.gz -C /usr/local/java/
 
 cd /usr/local/java
 ```
@@ -27,7 +27,7 @@ cd /usr/local/java
 ### 更名解压包，便于配置环境变量
 
 ```bash
-sudo mv jdk1.8.0_151 jdk
+sudo mv jdk1.8.0_161 jdk
 ```
 
 ## 设置java环境变量

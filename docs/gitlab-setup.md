@@ -93,7 +93,7 @@ docker pull gitlab/gitlab-ce
 
 ```bash
 docker run --detach \
-    --publish 8230:443 --publish 8200:80 --publish 8220:22 \
+    --publish 8203:443 --publish 8200:80 --publish 8202:22 \
     --name gitlab \
     --hostname gitlab.example.com \
     --restart always \

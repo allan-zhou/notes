@@ -17,7 +17,7 @@ vim /etc/exports
 添加以下内容
 
 ```txt
-/shared  chainserver03(rw,sync,no_subtree_check)
+/home/zhoujl  *(rw,sync,no_root_squash)
 ```
 
 重启服务
@@ -37,7 +37,10 @@ apt install -y nfs-common
 - mount command
 
 ```bash
-mount -t nfs4 -o proto=tcp,port=2049 chainserver02:/shared /mnt/shared
+mount -t nfs4 -o proto=tcp,port=2049 bc-p1:/home/zhoujl /mnt/zhoujl
+
+mount -t nfs4 -o proto=tcp,port=2049 bctest-server1:/arxan /mnt/arxan
+mount -t nfs4 -o proto=tcp,port=2049 bctest-server1:/home/zhoujl /mnt/zhoujl
 ```
 
 - mount using configfile ```/etc/fstab```
@@ -45,11 +48,19 @@ mount -t nfs4 -o proto=tcp,port=2049 chainserver02:/shared /mnt/shared
 ```txt
 chainserver02:/shared   /mnt/shared   nfs4    _netdev,auto  0  0
 
-bctest-server1:/arxan   /mnt/arxan   nfs4    _netdev,auto  0  0
+bc-p1:/home/zhoujl  /mnt/zhoujl  nfs4  _netdev,auto  0  0
 ```
 
 ```bash
 mount -a
+```
+
+- umount command
+
+```bash
+umount -v bc-p1:/home/zhoujl
+
+umount -v bctest-server1:/mnt/zhoujl
 ```
 
 ## Reference

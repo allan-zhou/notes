@@ -44,7 +44,7 @@ sudo apt-get install docker-ce
 # 查看主机可以安装的版本
 apt-cache madison docker-ce
 # sudo apt-get install docker-ce=<VERSION>
-sudo apt-get install docker-ce=17.09.1~ce-0~ubuntu
+sudo apt-get install docker-ce=18.03.0~ce-0~ubuntu
 ```
 
 - check install
