@@ -24,7 +24,10 @@ cd redis-4.0.9
 
 ```bash
 make
+
+cd ./src
 make test
+
 make install
 ```
 
@@ -132,6 +135,24 @@ bind=0.0.0.0
 
 # 设置密码requirepass，如
 requirepass=123456
+```
+
+## win10 ubuntu子系统安装问题
+
+### 常见问题汇总
+
+- <https://www.jianshu.com/p/687de3d000e2>
+- <https://www.cnblogs.com/yjf512/archive/2012/02/20/2358799.html>
+
+### tcl 安装
+
+```bash
+wget https://downloads.sourceforge.net/tcl/tcl8.6.8-src.tar.gz
+sudo tar xzvf tcl8.6.8-src.tar.gz  -C /usr/local/
+cd  /usr/local/tcl8.6.8/unix/
+sudo ./configure
+sudo make
+sudo make install
 ```
 
 ## Reference

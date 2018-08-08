@@ -86,6 +86,18 @@ character_set_server=utf8
 show variables like 'char%';
 ```
 
+## 配置远程访问
+
+```sql
+CREATE USER 'admin'@'%' IDENTIFIED BY '123456';
+
+CREATE DATABASE testdb DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
+
+grant all privileges on testdb.* to admin@'%';
+
+flush privileges;
+```
+
 ## Reference
 
 - [install mysql on ubuntu 16.04](https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-16-04)

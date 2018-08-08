@@ -84,24 +84,33 @@ sudo usermod -aG docker $USER
 
 - log out and log back in so that your group membership is re-evaluated
 
-## 修改国内镜像源
+## 国内安装源
+
+- 准备
 
 ```bash
-vim  /etc/docker/daemon.json
+sudo apt-get update
+sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common
 ```
 
-添加以下内容
-
-```vim
-{
-"registry-mirrors": ["https://registry.docker-cn.com"]
-}
-```
-
-重启docker
+- 安装GPG证书
 
 ```bash
-service docker restart
+curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -
+```
+
+- 写入软件源信息
+
+```bash
+sudo add-apt-repository "deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
+```
+
+- 更新并安装 Docker-CE
+
+```bash
+sudo apt-get -y update
+
+sudo apt-get -y install docker-ce
 ```
 
 ## Reference
