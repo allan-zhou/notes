@@ -2,10 +2,11 @@
 
 ```bash
 # 下载镜像
-docker pull mysql:8.0
+docker pull mysql
+#docker pull mysql:8.0
 
 # 启动
-docker run --name mysql -v //e/docker_v/mysql/data:/var/lib/mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 -d mysql:8.0
+docker run --name mysql -v //e/docker_v/mysql/data:/var/lib/mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 -d mysql
 
 # 进入容器
 docker exec -it mysql bash
