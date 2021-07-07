@@ -8,6 +8,9 @@ docker pull redis
 # 启动
 docker run -d -p 6379:6379 --name redis -v //e/docker_v/redis/conf/redis.conf:/etc/redis/redis.conf -v //e/docker_v/redis/data:/data redis redis-server /etc/redis/redis.conf --appendonly yes
 
+
+docker run -d -p 6370:6379 --name redis_6370 -v //e/docker_v/redis_6370/conf/redis.conf:/etc/redis/redis.conf redis redis-server /etc/redis/redis.conf
+
 # 如果没有 myredis 说明启动失败 查看错误日志
 docker logs redis
 # 查看 myredis 的 ip 挂载 端口映射等信息
